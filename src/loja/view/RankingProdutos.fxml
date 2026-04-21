@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="loja.controller.RankingProdutosController"
+            fitToWidth="true" fitToHeight="true"
+            styleClass="scroll-pane-ranking">
+
+    <content>
+        <StackPane alignment="TOP_CENTER" VBox.vgrow="ALWAYS">
+
+            <VBox spacing="24"
+                  alignment="TOP_CENTER"
+                  maxWidth="1150"
+                  fillWidth="true"
+                  VBox.vgrow="ALWAYS">
+
+                <padding>
+                    <Insets top="32" right="40" bottom="40" left="40"/>
+                </padding>
+
+                <!-- HEADER -->
+                <VBox spacing="6">
+                    <Label text="Ranking de Produtos"
+                           styleClass="dashboard-title"/>
+                    <Label text="Descubra quais produtos mais contribuem para seus resultados"
+                           styleClass="dashboard-subtitle"/>
+                </VBox>
+
+                <!-- FILTROS E TOGGLE -->
+                <HBox spacing="12" alignment="CENTER_LEFT" styleClass="filter-bar">
+                    <Label text="Período:" styleClass="filter-label"/>
+                    <ComboBox fx:id="comboMes" prefWidth="80" promptText="Mês"/>
+                    <ComboBox fx:id="comboAno" prefWidth="95" promptText="Ano"/>
+                    <Button text="Gerar Ranking"
+                            onAction="#gerarRanking"
+                            styleClass="button-primary"
+                            prefWidth="145"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="Ordenar por:" styleClass="filter-label"/>
+                    <Button fx:id="btnRankingVendas"
+                            text="Mais Vendidos"
+                            styleClass="toggle-btn"
+                            prefWidth="140"/>
+                    <Button fx:id="btnRankingLucro"
+                            text="Mais Lucrativos"
+                            styleClass="toggle-btn"
+                            prefWidth="145"/>
+                </HBox>
+
+                <!-- SEÇÃO HERO: TOP 1 DESTAQUE -->
+                <VBox fx:id="heroCard"
+                      alignment="CENTER"
+                      spacing="8"
+                      styleClass="ranking-hero-card"
+                      visible="false"
+                      managed="false">
+
+                    <Label text="🥇" style="-fx-font-size: 36px;"/>
+                    <Label fx:id="heroProduto"
+                           text="—"
+                           styleClass="hero-product-name"/>
+                    <Label fx:id="heroValor"
+                           text="R$ 0,00"
+                           styleClass="hero-value"/>
+                    <Label fx:id="heroQtd"
+                           text="0 unidades vendidas"
+                           styleClass="hero-subtitle"/>
+
+                </VBox>
+
+                <!-- TOP 3: MEDALHAS -->
+                <TilePane fx:id="top3Container"
+                          hgap="16" vgap="16"
+                          alignment="CENTER"
+                          prefColumns="3"
+                          maxWidth="680"
+                          visible="false"
+                          managed="false">
+
+                    <!-- TOP 1 -->
+                    <VBox fx:id="rank1Card"
+                          alignment="CENTER"
+                          spacing="8"
+                          styleClass="ranking-medal-card rank-1">
+                        <padding>
+                            <Insets top="16" right="16" bottom="14" left="16"/>
+                        </padding>
+                        <Label text="🥇" style="-fx-font-size: 28px;"/>
+                        <Label fx:id="rank1Nome"
+                               text="—"
+                               styleClass="ranking-product-name"
+                               wrapText="true"
+                               textAlignment="CENTER"/>
+                        <Label fx:id="rank1Valor"
+                               text="R$ 0,00"
+                               styleClass="ranking-product-value"/>
+                        <Label fx:id="rank1Qtd"
+                               text="0 un."
+                               styleClass="ranking-product-qtd"/>
+                    </VBox>
+
+                    <!-- TOP 2 -->
+                    <VBox fx:id="rank2Card"
+                          alignment="CENTER"
+                          spacing="8"
+                          styleClass="ranking-medal-card rank-2">
+                        <padding>
+                            <Insets top="16" right="16" bottom="14" left="16"/>
+                        </padding>
+                        <Label text="🥈" style="-fx-font-size: 28px;"/>
+                        <Label fx:id="rank2Nome"
+                               text="—"
+                               styleClass="ranking-product-name"
+                               wrapText="true"
+                               textAlignment="CENTER"/>
+                        <Label fx:id="rank2Valor"
+                               text="R$ 0,00"
+                               styleClass="ranking-product-value"/>
+                        <Label fx:id="rank2Qtd"
+                               text="0 un."
+                               styleClass="ranking-product-qtd"/>
+                    </VBox>
+
+                    <!-- TOP 3 -->
+                    <VBox fx:id="rank3Card"
+                          alignment="CENTER"
+                          spacing="8"
+                          styleClass="ranking-medal-card rank-3">
+                        <padding>
+                            <Insets top="16" right="16" bottom="14" left="16"/>
+                        </padding>
+                        <Label text="🥉" style="-fx-font-size: 28px;"/>
+                        <Label fx:id="rank3Nome"
+                               text="—"
+                               styleClass="ranking-product-name"
+                               wrapText="true"
+                               textAlignment="CENTER"/>
+                        <Label fx:id="rank3Valor"
+                               text="R$ 0,00"
+                               styleClass="ranking-product-value"/>
+                        <Label fx:id="rank3Qtd"
+                               text="0 un."
+                               styleClass="ranking-product-qtd"/>
+                    </VBox>
+
+                </TilePane>
+
+                <!-- KPIs -->
+                <HBox fx:id="kpiContainer"
+                      spacing="40"
+                      alignment="CENTER"
+                      styleClass="kpi-container"
+                      visible="false"
+                      managed="false">
+                    <Label fx:id="lblTotalProdutos"
+                           text="Total de Produtos: 0"
+                           styleClass="kpi-label"/>
+                    <Label fx:id="lblTotalQuantidade"
+                           text="Quantidade Vendida: 0"
+                           styleClass="kpi-label"/>
+                    <Label fx:id="lblProdutoTop"
+                           text="Mais Vendido: —"
+                           styleClass="kpi-label"/>
+                </HBox>
+
+                <VBox styleClass="card-main" maxWidth="1100">
+
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <HBox spacing="30">
+                        <!-- GRÁFICO -->
+                        <VBox spacing="0"
+                              styleClass="card-chart"
+                              VBox.vgrow="ALWAYS"
+                              HBox.hgrow="ALWAYS"
+                              maxWidth="Infinity"
+                              prefWidth="650">
+
+                            <padding>
+                                <Insets top="20" left="28" right="20" bottom="20"/>
+                            </padding>
+                            <Label text="Visualização"
+                                   styleClass="section-title"/>
+
+                            <BarChart fx:id="barChartRanking"
+                                      minHeight="400"
+                                      VBox.vgrow="ALWAYS"
+                                      legendVisible="false"
+                                      title="Quantidade vendida por produto"
+                                      animated="true">
+                                <xAxis>
+                                    <CategoryAxis label="Produto"/>
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Qtd. Vendida"/>
+                                </yAxis>
+                            </BarChart>
+                        </VBox>
+
+                        <!-- TABELA: RANKING COMPLETO -->
+                        <VBox spacing="0"
+                              styleClass="card-table"
+                              VBox.vgrow="ALWAYS"
+                              HBox.hgrow="ALWAYS"
+                              maxWidth="Infinity"
+                              prefWidth="450">
+
+                            <padding>
+                                <Insets top="20" left="28" right="28" bottom="20"/>
+                            </padding>
+
+                            <Label text="Ranking Completo"
+                                   styleClass="section-title"/>
+
+                            <TableView fx:id="tabelaRanking"
+                                       minHeight="460"
+                                       VBox.vgrow="ALWAYS"
+                                       styleClass="table-view-ranking">
+
+                                <columns>
+                                    <TableColumn fx:id="colProduto" text="Produto"/>
+                                    <TableColumn fx:id="colQuantidade" text="Qtd Vendida"/>
+                                    <TableColumn fx:id="colValorTotal" text="Valor Total"/>
+                                </columns>
+
+                                <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                </columnResizePolicy>
+
+                            </TableView>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+
+                <!-- STATUS -->
+                <Label fx:id="statusLabel"
+                       styleClass="status-label"
+                       wrapText="true"/>
+
+            </VBox>
+        </StackPane>
+    </content>
+</ScrollPane>

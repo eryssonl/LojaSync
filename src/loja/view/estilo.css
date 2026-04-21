@@ -1,0 +1,832 @@
+/* Estilo moderno e profissional para o Controle de Loja */
+
+/* ==========================================
+   VARIÁVEIS DE COR
+   ========================================== */
+.root {
+    -cor-primary: #2c3e50;
+    -cor-secondary: #3498db;
+    -cor-success: #27ae60;
+    -cor-warning: #f39c12;
+    -cor-danger: #e74c3c;
+    -cor-light: #ecf0f1;
+    -cor-dark: #34495e;
+    -cor-white: #ffffff;
+    -cor-gray: #95a5a6;
+    -cor-border: #e0e4e8;
+
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #f5f7fa;
+}
+
+
+/* ==========================================
+   CABEÇALHO DA APLICAÇÃO
+   ========================================== */
+.app-header {
+    -fx-background-color: -cor-primary;
+    -fx-padding: 20;
+    -fx-alignment: center-left;
+}
+
+.app-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.app-subtitle {
+    -fx-font-size: 18px;
+    -fx-opacity: 0.7;
+
+}
+
+.app-background {
+    -fx-background-color: #f8f9fa;
+}
+
+.header-separator {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-pref-width: 1px;
+}
+
+
+.context-menu {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #e0e6ed;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.2, 0, 2);
+}
+
+.menu-item {
+    -fx-padding: 8 16;
+    -fx-text-fill: #2c3e50;
+}
+
+.menu-item:focused {
+    -fx-background-color: #f0f6ff;
+    -fx-text-fill: #3498db;
+}
+
+
+/* ==========================================
+   BASE — BOTÕES
+   ========================================== */
+.button {
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+/* PRIMÁRIO (ação principal) */
+.button-primary {
+    -fx-background-color: -cor-secondary;
+    -fx-text-fill: white;
+}
+
+.button-primary:hover {
+    -fx-background-color: #2980b9;
+}
+
+.button-primary:pressed {
+    -fx-background-color: #2175a3;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+.button-success {
+    -fx-background-color: #ecf0f1;
+    -fx-text-fill: #2c3e50;
+}
+
+.button-success:hover {
+    -fx-background-color: #2ecc71; /* verde mais claro */
+    -fx-text-fill: white;
+}
+
+.button-success:pressed {
+    -fx-background-color: #1e8449; /* verde mais escuro */
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* SECUNDÁRIO */
+.button-secondary {
+    -fx-background-color: #ecf0f1;
+    -fx-text-fill: #2c3e50;
+}
+
+.button-secondary:hover {
+    -fx-background-color: #dcdde1;
+}
+
+/* PERIGO */
+.button-danger {
+    -fx-background-color: #ecf0f1;
+    -fx-text-fill: #2c3e50;
+}
+
+.button-danger:hover {
+    -fx-background-color: -cor-danger;
+    -fx-text-fill: white;
+}
+
+/* TOGGLE — Ordenação */
+.toggle-btn {
+    -fx-background-color: transparent;
+    -fx-border-color: -cor-border;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+    -fx-font-weight: 600;
+    -fx-text-fill: -cor-dark;
+    -fx-cursor: hand;
+    -fx-font-size: 12.5px;
+    -fx-effect: none;
+}
+
+.toggle-btn:hover {
+    -fx-background-color: #eef3f8;
+    -fx-border-color: #c5d0db;
+}
+
+.toggle-btn:selected,
+.toggle-btn:armed {
+    -fx-background-color: -cor-secondary;
+    -fx-border-color: -cor-secondary;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(52,152,219,0.25), 6, 0, 0, 2);
+}
+
+
+/* ==========================================
+   CAMPOS E FORMULÁRIOS
+   ========================================== */
+.text-field, .password-field {
+    -fx-background-color: white;
+    -fx-border-color: -cor-border;
+    -fx-border-radius: 8px;
+    -fx-padding: 8 14;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: -cor-secondary;
+    -fx-background-color: white;
+}
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: -cor-border;
+    -fx-border-radius: 8px;
+    -fx-padding: 6 10;
+    -fx-font-size: 13px;
+    -fx-background-radius: 8;
+}
+
+.combo-box:focused {
+    -fx-border-color: -cor-secondary;
+    -fx-background-color: white;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: -cor-gray;
+}
+
+.input-field {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1);
+}
+
+.input-error {
+    -fx-border-color: -cor-danger;
+}
+
+.input-success {
+    -fx-border-color: -cor-success;
+}
+
+
+/* ==========================================
+   LABELS
+   ========================================== */
+.label {
+    -fx-text-fill: -cor-dark;
+    -fx-font-weight: 500;
+}
+
+/* Dashboard */
+.dashboard-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -cor-primary;
+}
+
+.dashboard-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: -cor-gray;
+}
+
+.welcome-label {
+    -fx-font-size: 18px;
+    -fx-text-fill: -cor-gray;
+    -fx-padding: 40;
+}
+
+.footer-label {
+    -fx-text-fill: -cor-gray;
+    -fx-font-size: 12px;
+    -fx-padding: 15;
+    -fx-alignment: center;
+}
+
+.footer {
+    -fx-padding: 20 0 0 0;
+    -fx-border-color: -cor-border transparent transparent transparent;
+}
+
+.label-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -cor-primary;
+}
+
+.label-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: -cor-gray;
+}
+
+/* Seção dentro do card */
+.section-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -cor-primary;
+}
+
+.info-label {
+    -fx-text-fill: -cor-dark;
+    -fx-font-weight: 500;
+    -fx-font-size: 13px;
+}
+
+.info-value {
+    -fx-text-fill: -cor-dark;
+    -fx-font-weight: 600;
+}
+
+.filter-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: -cor-gray;
+    -fx-font-weight: 500;
+}
+
+.filter-bar {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 14 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 8, 0, 0, 1);
+}
+
+.status-label {
+    -fx-text-fill: -cor-gray;
+    -fx-font-size: 13px;
+    -fx-padding: 8 0;
+    -fx-alignment: center;
+}
+
+
+/* ==========================================
+   FORMULÁRIOS / LAYOUT
+   ========================================== */
+.form-container {
+    -fx-spacing: 15;
+}
+
+.form-group {
+    -fx-spacing: 6;
+}
+
+.form-panel {
+    -fx-max-width: 650;
+}
+
+.section {
+    -fx-spacing: 12;
+}
+
+.content-panel {
+    -fx-background-color: white;
+    -fx-border-radius: 10px;
+    -fx-padding: 25;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 6, 0, 0, 1);
+}
+
+.card-container {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14;
+    -fx-padding: 24;
+    -fx-border-color: -cor-border;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 4);
+}
+
+
+/* ==========================================
+   TABELAS
+   ========================================== */
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #e5e7eb;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 4, 0, 1, 1);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -cor-dark;
+    -fx-background-radius: 8 8 0 0;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: -cor-dark;
+    -fx-text-fill: white;
+    -fx-font-weight: 600;
+    -fx-font-size: 12.5px;
+    -fx-padding: 11 8;
+    -fx-alignment: center-left;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-padding: 6 4;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #fafbfc;
+}
+
+.table-row-cell:even {
+    -fx-background-color: white;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #eef4fa;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #d4e6f1;
+    -fx-text-fill: -cor-dark;
+}
+
+.table-cell {
+    -fx-alignment: center-left;
+    -fx-padding: 7 10;
+    -fx-font-size: 13px;
+}
+
+/* ==========================================
+   GRÁFICOS
+   ========================================== */
+.chart {
+    -fx-padding: 10 10 15 5;
+    -fx-background-color: transparent;
+}
+
+.chart-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -cor-dark;
+}
+
+.chart-legend {
+    -fx-font-size: 12px;
+    -fx-text-fill: -cor-dark;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+.chart-vertical-grid-lines,
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e5e7eb;
+}
+
+.default-color0.chart-bar { -fx-bar-fill: -cor-secondary; }
+.default-color1.chart-bar { -fx-bar-fill: -cor-success; }
+.default-color2.chart-bar { -fx-bar-fill: -cor-warning; }
+.default-color3.chart-bar { -fx-bar-fill: -cor-danger; }
+.default-color4.chart-bar { -fx-bar-fill: #9b59b6; }
+
+
+/* ==========================================
+   SCROLL PANE
+   ========================================== */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical,
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb,
+.scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: #c5cdd5;
+    -fx-background-radius: 5;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:hover,
+.scroll-pane .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #a0aab4;
+}
+
+.scroll-pane-ranking {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+
+/* ==========================================
+   PAINÉIS TITULADOS
+   ========================================== */
+.titled-pane-primary {
+    -fx-background-color: white;
+    -fx-border-radius: 8px;
+    -fx-border-color: -cor-border;
+}
+
+.titled-pane-primary > .title {
+    -fx-background-color: -cor-primary;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.currency-field {
+    -fx-background-color: white;
+    -fx-border-color: -cor-border;
+    -fx-border-radius: 4px;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+    -fx-alignment: center-right;
+}
+
+.currency-field:focused {
+    -fx-border-color: -cor-secondary;
+    -fx-background-color: white;
+}
+
+.required-label {
+    -fx-text-fill: -cor-dark;
+    -fx-font-weight: 600;
+}
+
+.optional-label {
+    -fx-text-fill: -cor-gray;
+    -fx-font-weight: 500;
+}
+
+
+/* ==========================================
+   KPIs
+   ========================================== */
+.kpi-container {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 10;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 10;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);
+}
+
+.kpi-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: -cor-dark;
+}
+
+.kpi-value {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -cor-secondary;
+}
+
+
+/* ==========================================
+   ALERTAS
+   ========================================== */
+.alert {
+    -fx-font-size: 14px;
+}
+
+.alert.header-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: -cor-dark;
+}
+
+.alert.button-bar {
+    -fx-background-color: transparent;
+}
+
+.alert.button-container .button {
+    -fx-min-width: 80px;
+    -fx-padding: 8 16;
+}
+
+.separator {
+    -fx-border-color: -cor-border;
+}
+
+
+/* ==========================================
+   RANKING — Dashboard SaaS Moderno
+   ========================================== */
+
+/* --- Hero Card (Top 1) --- */
+.ranking-hero-card {
+    -fx-background-color: linear-gradient(to bottom right, #1e2d3d, #2c3e50, #34495e);
+    -fx-background-radius: 14;
+    -fx-padding: 24 30;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 14, 0, 0, 4);
+}
+
+.ranking-hero-card .label {
+    -fx-text-fill: white;
+}
+
+.hero-product-name {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.hero-value {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgba(255, 255, 255, 0.95);
+}
+
+.hero-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(255, 255, 255, 0.6);
+}
+
+/* --- Medal Cards (Top 3) --- */
+.ranking-medal-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 14 16;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 8, 0, 0, 2);
+    -fx-cursor: hand;
+    -fx-min-width: 160;
+    -fx-max-width: 220;
+}
+
+.ranking-medal-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.14), 16, 0, 0, 6);
+    -fx-scale-x: 1.035;
+    -fx-scale-y: 1.035;
+}
+
+.ranking-medal-card .label {
+    -fx-text-fill: -cor-dark;
+}
+
+/* Ouro */
+.ranking-medal-card.rank-1 {
+    -fx-background-color: linear-gradient(to bottom, #fff9e6, #ffffff);
+    -fx-border-color: #f5d76e;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+}
+
+/* Prata */
+.ranking-medal-card.rank-2 {
+    -fx-background-color: linear-gradient(to bottom, #f4f6f8, #ffffff);
+    -fx-border-color: #c0c7ce;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+}
+
+/* Bronze */
+.ranking-medal-card.rank-3 {
+    -fx-background-color: linear-gradient(to bottom, #fff5ed, #ffffff);
+    -fx-border-color: #e8b88a;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 12;
+}
+
+.ranking-product-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -cor-primary;
+}
+
+.ranking-product-value {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -cor-secondary;
+}
+
+.ranking-product-qtd {
+    -fx-font-size: 11.5px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.card-main {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: #e5e7eb;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 20, 0, 0, 6);
+}
+
+/* --- Card do Gráfico --- */
+.card-chart {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-border-color: -cor-border;
+    -fx-border-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 4);
+}
+
+/* --- Card da Tabela --- */
+.card-table {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-border-color: -cor-border;
+    -fx-border-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 4);
+}
+
+/* ==========================================
+   TABLEVIEW — Ranking (SaaS Analytics)
+   ========================================== */
+
+/* Container base — remove aparência default */
+.table-view-ranking {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+    -fx-effect: none;
+    -fx-background-radius: 0;
+}
+
+/* Header do header */
+.table-view-ranking .column-header-background {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+    -fx-border-width: 0 0 1.5 0;
+    -fx-padding: 0;
+}
+
+/* Headers individuais */
+.table-view-ranking .column-header,
+.table-view-ranking .filler {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1e2d3d;
+    -fx-font-size: 12.5px;
+    -fx-font-weight: 700;
+    -fx-padding: 12 14;
+    -fx-alignment: center-left;
+}
+
+.table-view-ranking .column-header .label {
+    -fx-text-fill: #1e2d3d;
+}
+
+.table-view-ranking .column-header:hover {
+    -fx-background-color: #eef2f7;
+}
+
+/* Linhas — zebra sutil */
+.table-view-ranking .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-padding: 0 2;
+}
+
+.table-view-ranking .table-row-cell:odd {
+    -fx-background-color: #fafbfc;
+}
+
+.table-view-ranking .table-row-cell:even {
+    -fx-background-color: white;
+}
+
+/* Hover suave */
+.table-view-ranking .table-row-cell:hover {
+    -fx-background-color: #f0f6fb;
+    -fx-background-radius: 8;
+    -fx-background-insets: 0 4;
+}
+
+/* Seleção */
+.table-view-ranking .table-row-cell:selected {
+    -fx-background-color: #e3f0fc;
+    -fx-background-radius: 8;
+    -fx-background-insets: 0 4;
+}
+
+/* Células */
+.table-view-ranking .table-cell {
+    -fx-padding: 10 14;
+    -fx-font-size: 13.5px;
+    -fx-font-weight: 500;
+    -fx-text-fill: #374151;
+}
+
+/* Célula de valor (colValorTotal) — destaque */
+.table-view-ranking .table-cell.valor-cell {
+    -fx-font-weight: 700;
+    -fx-text-fill: #2b6cb0;
+}
+
+/* Placeholder vazio */
+.table-view-ranking .placeholder {
+    -fx-background-color: transparent;
+}
+
+.table-view-ranking .placeholder .label {
+    -fx-text-fill: #9ca3af;
+    -fx-font-size: 13px;
+}
+
+/* Canto superior direito */
+.table-view-ranking .corner {
+    -fx-background-color: transparent;
+}
+
+/* Scroll bar */
+.table-view-ranking .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 2;
+}
+
+.table-view-ranking .scroll-bar:vertical .thumb {
+    -fx-background-color: #cdd5de;
+    -fx-background-radius: 6;
+    -fx-opacity: 0.5;
+}
+
+.table-view-ranking .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #a0aab4;
+    -fx-opacity: 0.7;
+}
+
+.table-view-ranking .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+.table-view-ranking .scroll-bar:vertical .increment-button,
+.table-view-ranking .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* ==========================================
+   Ranking Toggle (legado — compatibilidade)
+   ========================================== */
+.ranking-toggle {
+    -fx-background-color: transparent;
+    -fx-border-color: -cor-border;
+    -fx-border-radius: 4;
+    -fx-padding: 8 16;
+    -fx-font-weight: 600;
+    -fx-text-fill: -cor-dark;
+    -fx-cursor: hand;
+}
+
+.ranking-toggle:selected {
+    -fx-background-color: -cor-secondary;
+    -fx-border-color: -cor-secondary;
+    -fx-text-fill: white;
+}

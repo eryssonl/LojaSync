@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="loja.controller.SelecionarContaController"
+      spacing="15" prefWidth="700" prefHeight="500"
+      styleClass="content-panel form-panel"
+      stylesheets="@estilo.css">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <!-- CABEÇALHO -->
+    <VBox spacing="5">
+        <Label text="💳 Contas de Clientes" styleClass="label-title"/>
+        <Label text="Gerencie as contas e fiados dos clientes" styleClass="label-subtitle"/>
+    </VBox>
+
+    <Separator/>
+
+    <!-- AÇÕES -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <ComboBox fx:id="comboClientes"
+                  editable="true"
+                  promptText="🔍 Buscar cliente..."
+                  prefWidth="250"
+                  styleClass="input-field"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Nova Conta"
+                onAction="#novaConta"
+                styleClass="button-secondary"
+                prefWidth="120"/>
+        <Button text="Abrir Conta"
+                onAction="#abrirConta"
+                styleClass="button-primary"
+                prefWidth="130"/>
+    </HBox>
+
+    <!-- STATUS -->
+    <Label fx:id="statusLabel"
+           styleClass="status-label"
+           wrapText="true"/>
+
+</VBox>

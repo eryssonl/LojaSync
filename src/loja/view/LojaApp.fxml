@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:id="rootPane"
+            fx:controller="loja.controller.LojaAppController"
+            prefWidth="1200" prefHeight="800"
+            stylesheets="@estilo.css">
+
+    <!-- TOPO -->
+    <top>
+        <VBox spacing="0">
+
+            <!-- HEADER -->
+            <HBox alignment="CENTER_LEFT" spacing="15" styleClass="app-header">
+                <padding>
+                    <Insets top="18" right="25" bottom="14" left="25"/>
+                </padding>
+
+                <Label text="🏪" style="-fx-font-size: 28px;"/>
+
+                <Separator orientation="VERTICAL"
+                           styleClass="header-separator"
+                           prefHeight="30"/>
+
+                <VBox spacing="2">
+                    <Label text="Controle de Loja"
+                           style="-fx-text-fill: rgba(255,255,255,0.5);"
+                           styleClass="app-title"/>
+                    <Label text="Sistema de Gestão Comercial"
+                           style="-fx-text-fill: rgba(255,255,255,0.5);"
+                           styleClass="app-subtitle"/>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Label text="v1.0"
+                       style="-fx-text-fill: rgba(255,255,255,0.5); -fx-font-size: 12px;"/>
+
+            </HBox>
+
+            <!-- MENU -->
+            <MenuBar styleClass="main-menu-bar">
+                <menus>
+
+                    <Menu text="Produtos">
+                        <items>
+                            <MenuItem text="Cadastrar Produto" onAction="#abrirCadastro"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem text="Listar Produtos" onAction="#abrirListagem"/>
+                        </items>
+                    </Menu>
+
+                    <Menu text="Vendas">
+                        <items>
+                            <MenuItem text="Registrar Venda" onAction="#abrirVendas"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem text="Histórico de Vendas" onAction="#abrirHistorico"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem text="Contas de Clientes" onAction="#abrirTelaContas"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem text="Lucro Mensal" onAction="#abrirLucroMensal"/>
+                        </items>
+                    </Menu>
+
+                    <Menu text="Relatórios">
+                        <items>
+                            <MenuItem text="Gerar Relatório" onAction="#abrirRelatorios"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem text="Relatório de Clientes" onAction="#abrirCliente"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem text="Ranking de Produtos" onAction="#abrirRankingProdutos"/>
+                        </items>
+                    </Menu>
+
+                    <Menu text="Sistema">
+                        <items>
+                            <MenuItem text="Sair do Sistema" onAction="#sairSistema"/>
+                        </items>
+                    </Menu>
+
+                </menus>
+            </MenuBar>
+
+        </VBox>
+    </top>
+
+    <!-- CENTRO (boas-vindas) -->
+    <center>
+        <StackPane styleClass="app-background"
+                   prefWidth="Infinity"
+                   prefHeight="Infinity">
+
+            <!-- WRAPPER CENTRAL -->
+            <VBox alignment="TOP_CENTER"
+                  fillWidth="true"
+                  prefWidth="Infinity">
+
+                <children>
+
+                    <!-- CONTAINER PADRÃO DO SISTEMA -->
+                    <VBox fx:id="containerPrincipal"
+                          maxWidth="1200"
+                          minWidth="0"
+                          fillWidth="true"
+                          spacing="20">
+
+                        <padding>
+                            <Insets top="15" right="25" bottom="25" left="25"/>
+                        </padding>
+
+                        <!-- CONTEÚDO INICIAL (sua tela de boas-vindas) -->
+                        <VBox alignment="CENTER" spacing="30">
+
+                            <padding>
+                                <Insets top="20"/>
+                            </padding>
+
+                            <!-- SAUDAÇÃO -->
+                            <VBox alignment="CENTER" spacing="8">
+                                <Label text="Bem-vindo"
+                                       style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: -cor-primary;"/>
+
+                                <Label text="Selecione um módulo abaixo ou use o menu no topo para começar"
+                                       styleClass="label-subtitle"
+                                       style="-fx-font-size: 15px;"/>
+                            </VBox>
+
+                            <!-- CARDS -->
+                            <TilePane hgap="20" vgap="20"
+                                      alignment="CENTER"
+                                      prefColumns="3"
+                                      maxWidth="900">
+
+                                <!-- Card: Produtos -->
+                                <VBox alignment="CENTER" spacing="12"
+                                      styleClass="content-panel"
+                                      prefWidth="260" prefHeight="140">
+                                    <padding>
+                                        <Insets top="25" right="20" bottom="20" left="20"/>
+                                    </padding>
+                                    <Label text="📦" style="-fx-font-size: 36px;"/>
+                                    <Label text="Produtos" styleClass="label-title"/>
+                                    <Label text="Cadastro e listagem de itens"
+                                           styleClass="label-subtitle"
+                                           wrapText="true"
+                                           textAlignment="CENTER"/>
+                                </VBox>
+
+                                <!-- Card: Vendas -->
+                                <VBox alignment="CENTER" spacing="12"
+                                      styleClass="content-panel"
+                                      prefWidth="260" prefHeight="140">
+                                    <padding>
+                                        <Insets top="25" right="20" bottom="20" left="20"/>
+                                    </padding>
+                                    <Label text="🛒" style="-fx-font-size: 36px;"/>
+                                    <Label text="Vendas" styleClass="label-title"/>
+                                    <Label text="Registre vendas e gerencie contas"
+                                           styleClass="label-subtitle"
+                                           wrapText="true"
+                                           textAlignment="CENTER"/>
+                                </VBox>
+
+                                <!-- Card: Relatórios -->
+                                <VBox alignment="CENTER" spacing="12"
+                                      styleClass="content-panel"
+                                      prefWidth="260" prefHeight="140">
+                                    <padding>
+                                        <Insets top="25" right="20" bottom="20" left="20"/>
+                                    </padding>
+                                    <Label text="📊" style="-fx-font-size: 36px;"/>
+                                    <Label text="Relatórios" styleClass="label-title"/>
+                                    <Label text="Análise de desempenho e rankings"
+                                           styleClass="label-subtitle"
+                                           wrapText="true"
+                                           textAlignment="CENTER"/>
+                                </VBox>
+
+                            </TilePane>
+
+                        </VBox>
+
+                    </VBox>
+
+                </children>
+
+            </VBox>
+
+        </StackPane>
+    </center>
+
+    <!-- RODAPÉ -->
+    <bottom>
+        <HBox alignment="CENTER" styleClass="footer">
+            <Label text="© 2026 Controle de Loja — Sistema de Gestão Comercial"
+                   styleClass="footer-label"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

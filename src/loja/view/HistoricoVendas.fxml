@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="loja.controller.HistoricoVendasController"
+      spacing="15" prefHeight="600"
+      styleClass="content-panel"
+      stylesheets="@estilo.css">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <!-- CABEÇALHO -->
+    <VBox spacing="5">
+        <Label text="📋 Histórico de Vendas" styleClass="label-title"/>
+        <Label text="Acompanhe todas as vendas registradas" styleClass="label-subtitle"/>
+    </VBox>
+
+    <Separator/>
+
+    <!-- BUSCA E RESUMO -->
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <TextField fx:id="campoBusca"
+                   promptText="🔍 Buscar por produto ou cliente..."
+                   styleClass="input-field"
+                   prefWidth="300"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="labelResumo" text="Total vendido: R$ 0,00 | Lucro acumulado: R$ 0,00"
+               styleClass="kpi-label"/>
+    </HBox>
+
+    <!-- TABELA -->
+    <TableView fx:id="tabelaHistorico" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="colProduto" text="Produto" prefWidth="180"/>
+            <TableColumn fx:id="colQuantidade" text="Qtd" prefWidth="60"/>
+            <TableColumn fx:id="colPreco" text="Preço Unit." prefWidth="100"/>
+            <TableColumn fx:id="colCusto" text="Custo Unit." prefWidth="100"/>
+            <TableColumn fx:id="colLucroUnitario" text="Lucro Unit." prefWidth="100"/>
+            <TableColumn fx:id="colLucroPercentual" text="Lucro %" prefWidth="85"/>
+            <TableColumn fx:id="colTotal" text="Valor Total" prefWidth="110"/>
+            <TableColumn fx:id="colLucroTotal" text="Lucro Total" prefWidth="110"/>
+            <TableColumn fx:id="colData" text="Data" prefWidth="140"/>
+        </columns>
+    </TableView>
+
+    <!-- STATUS -->
+    <Label fx:id="statusLabel"
+           styleClass="status-label"
+           wrapText="true"/>
+
+</VBox>
