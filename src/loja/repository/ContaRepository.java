@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContaRepository {
-    private static final String ARQUIVO_CONTAS = "contas.json";
+    private static final String ARQUIVO_CONTAS = "contas.example.json";
 
     private final Gson gson;
 

@@ -15,7 +15,7 @@ import java.util.List;
 
 
 public class VendaRepository {
-    private static final String ARQUIVO = "vendas.json";
+    private static final String ARQUIVO = "vendas.example.json";
 
     private final Gson gson;
 

@@ -13,11 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProdutoRepository {
-    private static final String ARQUIVO = "produtos.json";
+    private static final String ARQUIVO = "produtos.example.json";
 
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    // Salvar TODOS os produtos (sobrescreve)
+    // =========================
+    //          SALVAR
+    // =========================
     public void salvarProdutos(List<Produto> produtos) {
         try (Writer writer = new FileWriter(ARQUIVO)) {
             gson.toJson(produtos, writer);
@@ -26,7 +28,9 @@ public class ProdutoRepository {
         }
     }
 
-    // Carregar produtos
+    // =========================
+    //         CARREGAR
+    // =========================
     public ObservableList<Produto> carregarProdutos() {
         File arquivo = new File(ARQUIVO);
 
@@ -41,6 +45,11 @@ public class ProdutoRepository {
 
             if (lista == null) {
                 lista = new ArrayList<>();
+            }
+            for (Produto p : lista) {
+                if (p.getLotes() == null) {
+                    p.setLotes(new ArrayList<>());
+                }
             }
 
             return FXCollections.observableArrayList(lista);
