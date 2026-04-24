@@ -12,16 +12,26 @@ import java.util.List;
 public class VendaService {
     private ObservableList<Vendas> vendas;
     private VendaRepository vendaRepo;
+    private ProdutoService produtoService;
 
-    public VendaService() {
-        vendaRepo = new VendaRepository();
-        vendas = vendaRepo.carregarVendas();
+    public VendaService(ProdutoService produtoService) {
+        this.produtoService = produtoService;
+        this.vendaRepo = new VendaRepository();
+        this.vendas = vendaRepo.carregarVendas();
 
-        if (vendas == null)
-            vendas = FXCollections.observableArrayList();
+        if (this.vendas == null) {
+            this.vendas = FXCollections.observableArrayList();
+        }
     }
 
-    public Vendas criarVenda(Produto produto, int quantidade, String cliente) {
+    // =========================
+    //        CRIAR VENDA
+    // =========================
+    public Vendas criarVenda(Produto produto,
+                             int quantidade,
+                             String cliente,
+                             double custoUnitarioReal) {
+
         String nomeCliente = (cliente == null || cliente.isBlank())
                 ? "Venda direta"
                 : cliente;
@@ -31,33 +41,35 @@ public class VendaService {
                 produto.getNome(),
                 quantidade,
                 produto.getPreco(),
-                produto.getCusto(),
+                custoUnitarioReal,
                 LocalDateTime.now()
         );
     }
 
-    public void registrarVenda(Vendas venda) {
-        vendas.add(venda);
-        salvarVendas();
-    }
+    // =========================
+    //   PROCESSAR VENDA (FIFO)
+    // =========================
+    public Vendas processarVenda(Produto produto, int quantidade, String cliente) {
 
-    public void processarVenda(Produto produto, int quantidade, String cliente) {
-
-        if (produto.getQuantidade() < quantidade) {
+        if (produto.getQuantidadeTotal() < quantidade) {
             throw new IllegalArgumentException("Estoque insuficiente");
         }
 
-        // Atualiza estoque
-        produto.setQuantidade(produto.getQuantidade() - quantidade);
+        double custoTotal = produtoService.baixarEstoqueFIFO(produto, quantidade);
+        double custoUnitario = custoTotal / quantidade;
 
-        // Cria venda
-        Vendas venda = criarVenda(produto, quantidade, cliente);
+        // Cria venda com custo REAL
+        Vendas venda = criarVenda(produto, quantidade, cliente, custoUnitario);
 
-        // Salva venda
         vendas.add(venda);
         salvarVendas();
+
+        return venda;
     }
 
+    // =========================
+    //    LISTS/PERSISTENCIA
+    // =========================
     public void adicionarVendas(List<Vendas> novasVendas) {
         vendas.addAll(novasVendas);
         salvarVendas();
@@ -73,10 +85,7 @@ public class VendaService {
     public ObservableList<Vendas> listarVendas() {
         return vendas;
     }
-
     public void salvarVendas() {
         vendaRepo.salvarVendas(vendas);
     }
-    //public ObservableList<Vendas> getVendas() { return  vendas; }
-
 }
