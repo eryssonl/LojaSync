@@ -101,6 +101,9 @@ public class CadastroProdutoController {
 
         // === Custo ===
         double custo = parseCurrencyField(custoField);
+        if (custo <= 0) {
+            throw new IllegalArgumentException("O custo deve ser maior que zero");
+        }
 
         // === Quantidade ===
         String qtdTexto = quantidadeField.getText().trim();
@@ -112,7 +115,10 @@ public class CadastroProdutoController {
             throw new IllegalArgumentException("A quantidade não pode ser negativa");
         }
 
-     return new Produto(nome, preco, custo, quantidade);
+        Produto produto = new Produto(nome, preco);
+        produto.adicionarLote(custo,quantidade);
+
+        return produto;
 
     }
     private void mostrarSucesso(String mensagem) {
@@ -124,12 +130,7 @@ public class CadastroProdutoController {
         statusLabel.setStyle("-fx-text-fill: -cor-danger;");
         statusLabel.setText(mensagem);
     }
-    /**
-     * Parses a currency formatted text field to a double value.
-     * @param field the TextField containing currency value
-     * @return the parsed double value
-     * @throws NumberFormatException if the field is empty or invalid
-     */
+
     private double parseCurrencyField(TextField field) {
         String texto = field.getText()
                 .replaceAll("[^0-9,]", "")
@@ -141,9 +142,6 @@ public class CadastroProdutoController {
         return Double.parseDouble(texto);
     }
 
-    /**
-     * Clears all form fields and resets currency fields to zero.
-     */
     @FXML
     private void limparCampos() {
         nomeField.clear();
@@ -151,9 +149,6 @@ public class CadastroProdutoController {
         resetCurrencyFields();
     }
 
-    /**
-     * Resets currency fields to zero value.
-     */
     private void resetCurrencyFields() {
         precoField.setText("R$ 0,00");
         custoField.setText("R$ 0,00");

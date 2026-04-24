@@ -9,7 +9,7 @@ public class AppService {
 
     public AppService() {
         this.produtoService = new ProdutoService();
-        this.vendaService = new VendaService();
+        this.vendaService = new VendaService(produtoService);
         this.contaService = new ContaService();
         this.relatorioService = new RelatorioService(vendaService);
         this.rankingService = new RankingService(vendaService);

@@ -1,5 +1,7 @@
 package loja.controller;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import loja.service.ProdutoService;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -47,6 +50,23 @@ public class ListagemProdutoController {
     @FXML
     public void initialize() {
 
+        tabelaProdutos.setRowFactory(tv -> new TableRow<>() {
+            @Override
+            protected void updateItem(Produto produto, boolean empty) {
+                super.updateItem(produto, empty);
+
+                if (produto == null || empty) {
+                    setTooltip(null);
+                } else {
+                    String texto = produto.getLotes().stream()
+                            .map(l -> "• " + l.getQuantidade() + " un. (R$ " + l.getCusto() + ")")
+                            .collect(Collectors.joining("\n"));
+
+                    setTooltip(new Tooltip("Lotes:\n" + texto));
+                }
+            }
+        });
+
         formatoMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 
         configurarColunas();
@@ -61,11 +81,17 @@ public class ListagemProdutoController {
     private void configurarColunas() {
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
-        colCusto.setCellValueFactory(new PropertyValueFactory<>("custo"));
-        colQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+        colQuantidade.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(cellData.getValue().getQuantidadeTotal()).asObject()
+        );
+        colCusto.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(cellData.getValue().getCustoMedio()).asObject()
+        );
         colMargem.setCellValueFactory(new PropertyValueFactory<>("margemLucro"));
         colMargemPercentual.setCellValueFactory(new PropertyValueFactory<>("margemPercentual"));
-        colLucro.setCellValueFactory(new PropertyValueFactory<>("lucroTotal"));
+        colLucro.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(cellData.getValue().getLucroTotal()).asObject()
+        );
 
         tabelaProdutos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
@@ -96,7 +122,7 @@ public class ListagemProdutoController {
             }
         });
 
-        // Estoque baixo (🔥 melhorado)
+        // Estoque baixo
         colQuantidade.setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(Integer valor, boolean empty) {
@@ -173,7 +199,7 @@ public class ListagemProdutoController {
     @FXML
     public void atualizarTabela() {
         if (produtoService != null) {
-            tabelaProdutos.refresh(); // 🔥 mais eficiente
+            tabelaProdutos.refresh();
             atualizarResumo();
             verificarEstoqueMinimo();
         }
@@ -189,31 +215,41 @@ public class ListagemProdutoController {
             return;
         }
 
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Adicionar Estoque");
-        dialog.setHeaderText("Produto: " + selecionado.getNome());
-        dialog.setContentText("Quantidade a adicionar:");
+        try {
+            TextInputDialog dialogQtd = new TextInputDialog();
+            dialogQtd.setHeaderText("Quantidade para " + selecionado.getNome());
+            dialogQtd.setContentText("Quantidade:");
 
-        dialog.showAndWait().ifPresent(input -> {
-            try {
-                int qtd = Integer.parseInt(input);
+            Optional<String> qtdInput = dialogQtd.showAndWait();
+            if (qtdInput.isEmpty()) return;
 
-                produtoService.adicionarEstoque(selecionado, qtd);
+            int quantidade =  Integer.parseInt(qtdInput.get());
 
-                tabelaProdutos.refresh();
-                atualizarResumo();
+            TextInputDialog dialogCusto = new TextInputDialog();
+            dialogCusto.setHeaderText("Custo do novo lote");
+            dialogCusto.setContentText("Custo unitário:");
 
-                statusLabel.setStyle("-fx-text-fill: -cor-success;");
-                statusLabel.setText("Estoque atualizado com sucesso!");
+            Optional<String> custoInput = dialogCusto.showAndWait();
+            if (custoInput.isEmpty()) return;
 
-            } catch (NumberFormatException e) {
-                statusLabel.setStyle("-fx-text-fill: -cor-danger;");
-                statusLabel.setText("Digite um número válido.");
-            } catch (IllegalArgumentException e) {
-                statusLabel.setStyle("-fx-text-fill: -cor-danger;");
-                statusLabel.setText(e.getMessage());
-            }
-        });
+            double custo =  Double.parseDouble(custoInput.get());
+
+            produtoService.adicionarEstoque(selecionado, custo, quantidade);
+
+            tabelaProdutos.refresh();
+            atualizarResumo();
+
+            statusLabel.setStyle("-fx-text-fill: -cor-success;");
+            statusLabel.setText("Novo lote adicionado com sucesso!");
+
+        } catch (NumberFormatException e) {
+            statusLabel.setStyle("-fx-text-fill: -cor-danger;");
+            statusLabel.setText("Valores inválidos.");
+        } catch (IllegalArgumentException e) {
+            statusLabel.setStyle("-fx-text-fill: -cor-danger;");
+            statusLabel.setText(e.getMessage());
+        }
+
     }
 
     // ==============================
@@ -223,11 +259,11 @@ public class ListagemProdutoController {
     private void atualizarResumo() {
 
         int totalItens = produtoService.getProdutos().stream()
-                .mapToInt(Produto::getQuantidade)
+                .mapToInt(Produto::getQuantidadeTotal)
                 .sum();
 
         double valorTotal = produtoService.getProdutos().stream()
-                .mapToDouble(p -> p.getPreco() * p.getQuantidade())
+                .mapToDouble(p -> p.getPreco() * p.getQuantidadeTotal())
                 .sum();
 
         labelResumo.setText(
@@ -239,8 +275,8 @@ public class ListagemProdutoController {
     private void verificarEstoqueMinimo() {
 
         String alertas = produtoService.getProdutos().stream()
-                .filter(p -> p.getQuantidade() < p.getEstoqueMinimo())
-                .map(p -> "• " + p.getNome() + " — " + p.getQuantidade() + " un.")
+                .filter(p -> p.getQuantidadeTotal() < p.getEstoqueMinimo())
+                .map(p -> "• " + p.getNome() + " — " + p.getQuantidadeTotal() + " un.")
                 .collect(Collectors.joining("\n"));
 
         if (!alertas.isEmpty()) {

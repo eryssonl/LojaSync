@@ -1,5 +1,6 @@
 package loja.controller;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -55,7 +56,9 @@ public class VendasController {
     public void initialize() {
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
-        colQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+        colQuantidade.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(cellData.getValue().getQuantidadeTotal()).asObject()
+        );
 
         // Formatação monetária para colTotal
         currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
@@ -98,7 +101,7 @@ public class VendasController {
         if (produtoSelecionado != null) {
             resumoProduto.setText(produtoSelecionado.getNome());
             resumoPreco.setText(currencyFormat.format(produtoSelecionado.getPreco()));
-            resumoEstoque.setText(produtoSelecionado.getQuantidade() + " un.");
+            resumoEstoque.setText(produtoSelecionado.getQuantidadeTotal() + " un.");
 
             // Calcula total com base na quantidade informada
             try {
@@ -138,7 +141,7 @@ public class VendasController {
                 return;
             }
 
-            if (qtd > selecionado.getQuantidade()) {
+            if (qtd > selecionado.getQuantidadeTotal()) {
                 statusLabel.setStyle("-fx-text-fill: -cor-danger;");
                 statusLabel.setText("Estoque insuficiente.");
                 return;
@@ -146,12 +149,9 @@ public class VendasController {
 
             String cliente = campoCliente.getText();
 
-            // 🔥 CENTRALIZA TUDO NO SERVICE
-            vendaService.processarVenda(selecionado, qtd, cliente);
+            Vendas venda = vendaService.processarVenda(selecionado, qtd, cliente);
 
-            // 🔥 Se for fiado → vai pra conta
             if (cliente != null && !cliente.isBlank()) {
-                Vendas venda = vendaService.criarVenda(selecionado, qtd, cliente);
                 contaService.registrarCompraNaConta(cliente, venda);
             }
 
