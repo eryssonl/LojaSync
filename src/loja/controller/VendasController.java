@@ -151,7 +151,9 @@ public class VendasController {
 
             Vendas venda = vendaService.processarVenda(selecionado, qtd, cliente);
 
-            if (cliente != null && !cliente.isBlank()) {
+            if (cliente == null || cliente.isBlank()) {
+                vendaService.registrarVenda(venda);
+            } else {
                 contaService.registrarCompraNaConta(cliente, venda);
             }
 

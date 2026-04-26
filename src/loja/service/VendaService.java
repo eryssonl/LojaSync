@@ -25,29 +25,7 @@ public class VendaService {
     }
 
     // =========================
-    //        CRIAR VENDA
-    // =========================
-    public Vendas criarVenda(Produto produto,
-                             int quantidade,
-                             String cliente,
-                             double custoUnitarioReal) {
-
-        String nomeCliente = (cliente == null || cliente.isBlank())
-                ? "Venda direta"
-                : cliente;
-
-        return new Vendas(
-                nomeCliente,
-                produto.getNome(),
-                quantidade,
-                produto.getPreco(),
-                custoUnitarioReal,
-                LocalDateTime.now()
-        );
-    }
-
-    // =========================
-    //   PROCESSAR VENDA (FIFO)
+    //  CRIAR E PROCESSAR VENDA
     // =========================
     public Vendas processarVenda(Produto produto, int quantidade, String cliente) {
 
@@ -58,12 +36,18 @@ public class VendaService {
         double custoTotal = produtoService.baixarEstoqueFIFO(produto, quantidade);
         double custoUnitario = custoTotal / quantidade;
 
-        // Cria venda com custo REAL
-        Vendas venda = criarVenda(produto, quantidade, cliente, custoUnitario);
+        String nomeCliente = (cliente == null || cliente.isBlank())
+                ? "Venda direta"
+                : cliente;
 
-        vendas.add(venda);
-        salvarVendas();
-
+        Vendas venda = new Vendas(
+                nomeCliente,
+                produto.getNome(),
+                quantidade,
+                produto.getPreco(),
+                custoUnitario,
+                LocalDateTime.now()
+        );
         return venda;
     }
 
@@ -72,6 +56,10 @@ public class VendaService {
     // =========================
     public void adicionarVendas(List<Vendas> novasVendas) {
         vendas.addAll(novasVendas);
+        salvarVendas();
+    }
+    public void registrarVenda(Vendas venda){
+        vendas.add(venda);
         salvarVendas();
     }
 
