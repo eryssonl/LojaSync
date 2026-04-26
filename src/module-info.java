@@ -5,6 +5,7 @@ module ControleDeLoja {
     requires com.google.gson;
     requires java.sql;
     requires javafx.base;
+    requires javafx.graphics;
 
     exports loja.app;
     exports loja.controller;

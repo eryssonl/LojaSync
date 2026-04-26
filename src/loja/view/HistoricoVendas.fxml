@@ -4,11 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
+<StackPane xmlns:fx="http://javafx.com/fxml"
       fx:controller="loja.controller.HistoricoVendasController"
-      spacing="15" prefHeight="600"
-      styleClass="content-panel"
+      fx:id="root"
       stylesheets="@estilo.css">
+
+    <VBox spacing="15" styleClass="content-panel" fillWidth="true">
 
     <padding>
         <Insets top="25" right="25" bottom="25" left="25"/>
@@ -22,35 +23,105 @@
 
     <Separator/>
 
-    <!-- BUSCA E RESUMO -->
-    <HBox spacing="15" alignment="CENTER_LEFT">
-        <TextField fx:id="campoBusca"
-                   promptText="🔍 Buscar por produto ou cliente..."
-                   styleClass="input-field"
-                   prefWidth="300"/>
-        <Region HBox.hgrow="ALWAYS"/>
-        <Label fx:id="labelResumo" text="Total vendido: R$ 0,00 | Lucro acumulado: R$ 0,00"
-               styleClass="kpi-label"/>
-    </HBox>
+        <!-- 🔥 TOPO: KPIs + BUSCA -->
+        <HBox spacing="20" alignment="CENTER_LEFT">
 
-    <!-- TABELA -->
-    <TableView fx:id="tabelaHistorico" VBox.vgrow="ALWAYS" styleClass="table-view">
-        <columns>
-            <TableColumn fx:id="colProduto" text="Produto" prefWidth="180"/>
-            <TableColumn fx:id="colQuantidade" text="Qtd" prefWidth="60"/>
-            <TableColumn fx:id="colPreco" text="Preço Unit." prefWidth="100"/>
-            <TableColumn fx:id="colCusto" text="Custo Unit." prefWidth="100"/>
-            <TableColumn fx:id="colLucroUnitario" text="Lucro Unit." prefWidth="100"/>
-            <TableColumn fx:id="colLucroPercentual" text="Lucro %" prefWidth="85"/>
-            <TableColumn fx:id="colTotal" text="Valor Total" prefWidth="110"/>
-            <TableColumn fx:id="colLucroTotal" text="Lucro Total" prefWidth="110"/>
-            <TableColumn fx:id="colData" text="Data" prefWidth="140"/>
-        </columns>
-    </TableView>
+            <!-- TOTAL -->
+            <VBox styleClass="kpi-card">
+                <Label text="💰 Total vendido"/>
+                <Label fx:id="labelTotal" styleClass="kpi-value"/>
+            </VBox>
 
+            <!-- LUCRO -->
+            <VBox styleClass="kpi-card">
+                <Label text="📈 Lucro"/>
+                <Label fx:id="labelLucro" styleClass="kpi-value"/>
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- BUSCA -->
+            <TextField fx:id="campoBusca"
+                       promptText="🔍 Buscar por produto ou cliente..."
+                       styleClass="input-field"
+                       prefWidth="260"/>
+        </HBox>
+
+        <!-- 🔥 TABELA -->
+        <TableView fx:id="tabelaHistorico"
+                   VBox.vgrow="ALWAYS"
+                   styleClass="table-view-ranking">
+
+            <columns>
+                <TableColumn fx:id="colProduto" text="Produto"/>
+                <TableColumn fx:id="colQuantidade" text="Qtd"/>
+                <TableColumn fx:id="colPreco" text="Preço"/>
+                <TableColumn fx:id="colTotal" text="Total"/>
+                <TableColumn fx:id="colLucroTotal" text="Lucro"/>
+                <TableColumn fx:id="colData" text="Data"/>
+            </columns>
+
+        </TableView>
+
+        <!-- STATUS -->
+        <Label fx:id="statusLabel"
+               styleClass="status-label"
+               wrapText="true"/>
+
+    </VBox>
+
+    <!-- ============================= -->
+    <!--    OVERLAY DE DETALHES -->
+    <!-- ============================= -->
+    <VBox fx:id="cardDetalhes"
+          visible="false"
+          managed="false"
+          maxWidth="350"
+          alignment="TOP_LEFT"
+          StackPane.alignment="CENTER_RIGHT"
+          translateX="400"
+          styleClass="card-detalhes-overlay">
+
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <!-- CABEÇALHO DO CARD -->
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="✕" onAction="#fecharDetalhes" styleClass="btn-close"/>
+        </HBox>
+
+        <Label text="🔍 Detalhes da venda" styleClass="section-title"/>
+
+        <Separator/>
+
+        <!-- GRID DE DETALHES -->
+        <GridPane hgap="10" vgap="8">
+
+            <Label text="Produto:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label fx:id="detProduto" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Quantidade:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Label fx:id="detQuantidade" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Preço:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label fx:id="detPreco" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Custo:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Label fx:id="detCusto" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Lucro unit:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Label fx:id="detLucroUnit" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <Label text="Lucro %:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <Label fx:id="detLucroPercentual" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        </GridPane>
+
+    </VBox>
     <!-- STATUS -->
     <Label fx:id="statusLabel"
            styleClass="status-label"
            wrapText="true"/>
 
-</VBox>
+</StackPane>
