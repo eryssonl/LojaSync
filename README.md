@@ -87,9 +87,37 @@ O projeto segue o padrão em camadas:
 
 ---
 
-## 📸 Interface
+## 📸 Interface do Sistema
 
+### 📝 Cadastro de Produto
+<p align="center">
+  <img src="docs/images/cadastro.png" width="800"/>
+</p>
 
+### 📋 Listagem de Produtos
+<p align="center">
+  <img src="docs/images/listagem.png" width="800"/>
+</p>
+
+### 🛒 Tela de Vendas
+<p align="center">
+  <img src="docs/images/vendas.png" width="800"/>
+</p>
+
+### 📋 Histórico de Vendas
+<p align="center">
+  <img src="docs/images/historico.png" width="800"/>
+</p>
+
+### 🧾 Relatório de Vendas
+<p align="center">
+  <img src="docs/images/relatorio.png" width="800"/>
+</p>
+
+### 📊 Ranking de Produtos
+<p align="center">
+  <img src="docs/images/ranking.png" width="800"/>
+</p>
 
 ---
 
